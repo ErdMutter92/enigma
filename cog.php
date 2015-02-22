@@ -21,6 +21,7 @@
 					$input = array_search($input[0], $this->alphabetMap);
 				}
 			}
+
 			$input += $this->counter; // shifts the input by counter;
 			$input %= 26;
 			$value = $this->alphabetMap[$input];

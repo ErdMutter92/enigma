@@ -37,10 +37,7 @@
 	$cog2 = new Cog('III', '0', $cog1);
 	$cog3 = new Cog('II', '0', $cog2);
 	$tmp = new Enigma($cog1, $cog2, $cog3);
-	$tmp1 = new Enigma($cog1, $cog2, $cog3);
 	$tmp->encrypt('Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! ');
-	echo '<br />';
-	$tmp1->encrypt('vsfyemcdydonwuvmpaqkimyfiqyssfvlfqgghcjjinplzztdkmvosgynjrfx');
-	$tmp->decrypt();
+
 
 ?>
