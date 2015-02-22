@@ -2,6 +2,7 @@
 
 	require('./cog.php');
 
+
 	class Enigma {
 
 		private $cog1, $cog2, $cog3;
