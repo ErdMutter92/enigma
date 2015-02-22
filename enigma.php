@@ -4,40 +4,42 @@
 
 	class Enigma {
 
-		private $cogSlots;
+		private $cog1, $cog2, $cog3;
 
-		private function isCogSlotsFull() {
-			if (count($this->cogSlots) >= 3) {
-				return True;
-			} else {
-				return False;
-			}
-		}
-	
-		public function addCog($type, $initValue) {
-			if (!$this->isCogSlotsFull()) {
-				$this->cogSlots[] = new Cog($type, $initValue);
-			}
-		}
-
-		public function getCogSlots() {
-			print_r($this->cogSlots);
+		public function __construct($cog1, $cog2, $cog3) {
+			$this->cog1 = $cog1;
+			$this->cog2 = $cog2;
+			$this->cog3 = $cog3;
 		}
 
 		public function encrypt($string) {
-			if ($this->isCogSlotsFull()) {
-				echo count(str_split($string));
+			$string = preg_replace("/[^A-Za-z]/", '', $string);
+			$string = strToLower($string);
+			$strAsArray = str_split($string);
+
+			$tmpString = '';
+
+			foreach ($strAsArray as $char) {
+				$tmpString = $tmpString . $this->cog3->output($this->cog2->output($this->cog1->output($char)));
 			}
+
+			echo $tmpString;
+		}
+
+		public function decrypt() {
+			
 		}
 		
 	}
 
-	$tmp = new Enigma();
-	$tmp->addCog('1', '0');
-	$tmp->addCog('3', '0');
-	$tmp->addCog('2', '0');
-	$tmp->getCogSlots();
-	echo '<br /><br />';
-	$tmp->encrypt('Hello, World!');
+	$cog1 = new Cog('I', '0');
+	$cog2 = new Cog('III', '0', $cog1);
+	$cog3 = new Cog('II', '0', $cog2);
+	$tmp = new Enigma($cog1, $cog2, $cog3);
+	$tmp1 = new Enigma($cog1, $cog2, $cog3);
+	$tmp->encrypt('Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! ');
+	echo '<br />';
+	$tmp1->encrypt('vsfyemcdydonwuvmpaqkimyfiqyssfvlfqgghcjjinplzztdkmvosgynjrfx');
+	$tmp->decrypt();
 
 ?>

@@ -4,8 +4,10 @@
 		private $counter;
 		private $alphabetMap;
 		private $cogMap;
+		private $nextCog;
 
-		public function __construct($type, $initValue) {
+		public function __construct($type, $initValue, $nextCog = NULL) {
+			$this->nextCog = $nextCog;
 			$this->setCounter($initValue);
 			$this->alphabetMap = range('a', 'z');
 			$this->setType($type);
@@ -20,7 +22,15 @@
 				}
 			}
 			$input += $this->counter; // shifts the input by counter;
+			$input %= 26;
 			$value = $this->alphabetMap[$input];
+
+			// Turn Cog after each output.
+			if ((isset($this->nextCog)) && ($this->counter == 25)) {
+				$this->nextCog->updateCounter();
+			} else {
+				$this->updateCounter();
+			}
 
 			return $this->cogMap[$value];
 		}
@@ -30,8 +40,8 @@
 		}
 
 		public function updateCounter() {
-			$this->counter++;
-			$this->counter %= 26;
+			$counter = $this->counter + 1;
+			$this->setCounter($counter);
 		}
 
 		private function setType($type) {
